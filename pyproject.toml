@@ -1,0 +1,31 @@
+[project]
+name = "jetpack"
+version = "0.1.0"
+description = "Project Utilities to kickstart a micro-service."
+readme = "README.md"
+authors = [
+    { name = "Faizan Azim", email = "faizanazim11@gmail.com" },
+    { name = "Irfanuddin Shafi Ahmed", email = "irfanuddinshafi@gmail.com" },
+]
+requires-python = ">=3.13"
+dependencies = [
+    "pydantic>=2.10.3",
+    "pydantic-settings>=2.7.0",
+    "whenever>=0.6.15",
+]
+
+[project.optional-dependencies]
+apis = [
+    "fastapi>=0.115.6",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.0.1",
+    "pytest>=8.3.4",
+    "ruff>=0.8.3",
+]
