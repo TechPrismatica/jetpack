@@ -12,7 +12,7 @@ class _LogConfig(BaseSettings):
     ENABLE_CONSOLE_LOG: Optional[bool] = True
     LOG_ENABLE_TRACEBACK: bool = Field(default=False)
     DEFER_LOG_MODULES: Optional[list] = ["httpx", "pymongo"]
-    DEFER_ADDITIONAL_LOGS = Optional[list] = []
+    DEFER_ADDITIONAL_LOGS: Optional[list] = []
     DEFER_LOG_LEVEL: str = "INFO"
 
 
