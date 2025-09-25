@@ -21,8 +21,8 @@ class ExceptionHandlers:
     def request_validation_exception_handler(_: Request, exc: RequestValidationError):
         logger.exception(f"Request Validation Exception: {exc}")
         return JSONResponse(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-            content={"message": "Request Validation Error", "detail": exc.json()},
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
+            content={"message": "Request Validation Error", "detail": exc.errors()},
         )
 
     @staticmethod
