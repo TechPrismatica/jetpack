@@ -2,6 +2,7 @@ import logging
 import pathlib
 from logging import StreamHandler
 from logging.handlers import RotatingFileHandler
+from asgi_correlation_id import CorrelationIdFilter
 
 from jetpack.config import LogConfig, PathConf
 
@@ -25,6 +26,7 @@ def configure_logger(project_name: str = PathConf.MODULE_NAME):
     """
     Creates a rotating log
     """
+    cid_filter = CorrelationIdFilter(uuid_length=32)
     logging_config = read_configuration(project_name=project_name)
     __logger__ = logging.getLogger()
     __logger__.setLevel(LogConfig.LOG_LEVEL)
@@ -33,7 +35,7 @@ def configure_logger(project_name: str = PathConf.MODULE_NAME):
         logging.getLogger(each_module).setLevel(LogConfig.DEFER_LOG_LEVEL)
     for each_module in LogConfig.DEFER_ADDITIONAL_LOGS:
         logging.getLogger(each_module).setLevel(LogConfig.DEFER_LOG_LEVEL)
-    log_formatter = "%(asctime)s - %(levelname)-6s - [%(threadName)5s:%(funcName)5s(): %(lineno)s] - %(message)s"
+    log_formatter = "%(asctime)s - %(levelname)-6s - [%(threadName)5s:%(funcName)5s(): %(lineno)s] [%(correlation_id)s] - %(message)s"
     time_format = "%Y-%m-%d %H:%M:%S"
     formatter = logging.Formatter(log_formatter, time_format)
     for each_handler in logging_config["handlers"]:
@@ -55,5 +57,6 @@ def configure_logger(project_name: str = PathConf.MODULE_NAME):
             temp_handler.setFormatter(formatter)
         else:
             continue
+        temp_handler.addFilter(cid_filter)
         __logger__.addHandler(temp_handler)
     return __logger__

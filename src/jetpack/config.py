@@ -27,8 +27,10 @@ class _PathConf(BaseSettings):
 
     @model_validator(mode="before")
     def path_merger(cls, values):
+        base_path = values.get("BASE_PATH") or "code/data"
+        module_name = values.get("MODULE_NAME") or ""
         values["LOGS_MODULE_PATH"] = os.path.join(
-            values.get("BASE_PATH"), "logs", values.get("MODULE_NAME").replace("-", "_")
+            base_path, "logs", module_name.replace("-", "_")
         )
         return values
 
