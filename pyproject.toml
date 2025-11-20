@@ -1,6 +1,6 @@
 [project]
 name = "jetpack"
-version = "0.2.0"
+version = "0.2.1"
 description = "Project Utilities to kickstart a micro-service."
 readme = "README.md"
 authors = [
@@ -10,6 +10,7 @@ authors = [
 requires-python = ">=3.13"
 dependencies = [
     "asgi-correlation-id>=4.3.4",
+    "orjson>=3.11.4",
     "pydantic>=2.10.3",
     "pydantic-settings>=2.7.0",
     "whenever>=0.6.15",
